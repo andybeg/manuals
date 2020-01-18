@@ -1,0 +1,24 @@
+build amdroid 8 for imx6 sabresd
+create docker on ubuntu:16.04
+install packeges
+apt-get install software-properties-common
+add-apt-repository ppa:openjdk-r/ppa
+apt-get install language-pack-en
+apt-get install uuid uuid-dev zlib1g-dev liblz-dev liblzo2-2 liblzo2-dev lzop git-core curl u-boot-tools mtd-utils android-tools-fsutils openjdk-8-jdk device-tree-compiler gdisk repo git ninja bc m4 unzip zip
+apt-get install  g++-multilib gcc-multilib lib32ncurses5-dev lib32readline-gplv2-dev lib32z1-dev
+apt-get install libxml2-utils
+
+git config --global user.email "andybeg@gmail.com"
+git config --global user.name "andybeg"
+export USER=$(whoami)
+. imx-o8.0.0_1.0.0_ga/imx_android_setup.sh
+. build/envsetup.sh
+	lunch sabresd_6dq-eng
+
+docker save ubuntu.14.04.openjdk8 -o ubuntu.14.04.openjdk8.tar
+
+errors
+err -Try increasing heap size with java option '-Xmx<size>'.
+sol - export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
+./prebuilts/sdk/tools/jack-admin kill-server
+./prebuilts/sdk/tools/jack-admin start-server
